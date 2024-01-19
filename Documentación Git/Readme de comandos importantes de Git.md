@@ -1,5 +1,5 @@
 
-# Lo siguiente es una documentación del curso de Git -GitHub en Platzi
+# Lo siguiente es una documentación del curso de Git - GitHub en Platzi
 
 ### CONCEPTOS 📖
 
@@ -22,12 +22,16 @@ GitHub es un servicio de alojamiento que ofrece a los desarrolladores repositori
 
 ### COMANDOS ⌨️
 
-#### INICIALIZAR EL REPOSITORIO
-Para incializar el repositorio lo harás con el siguiente comando: 
-```
-    git init
-```
-Con el comando anterior se crea un area en memoria RAM llamada **staging** que está completamente desconectada. Pero a su vez se crea el repositorio local (carpeta llamada **.git**).
+#### CREAR REPOSITORIOS
+Para iniciar u obtener un nuevo repositorio, usaremos los siguientes comandos: 
+
+|COMANDO|DESCRIPCIÓN|
+|:------|:----------|
+|`git init`|Crea un nuevo repositorio local.|
+|`git init <projectName>`|Crea un nuevo repositorio con el nombre especificado.|
+|`git clone <url>`|Descarga un proyecto y toda su historia de versión.|
+
+Con el comando `init` se crea un area en memoria RAM llamada **staging** que está completamente desconectada. Pero a su vez se crea el repositorio local (carpeta llamada **.git**).
 
 #### AGREGAR ARCHIVOS
 Necesitamos agregar al staged los archivos que queremos proteger, así que lo haremos con el comando add:
@@ -56,10 +60,13 @@ Si agregamos un archivo y deseamos borrarlo, usaremos el siguiente comando:
 |`git rm --force <file>`|Elimina los archivos de **git** y el disco duro.|
 
 #### ENVIAR LOS CAMBIOS AGREGADOS AL REPOSITORIO
-Luego de agregar los archivos, si queremos enviarlos al repositorio, usaremos el sigueinte comando:
-``` 
-    git commit -m "mensaje con la descripción del cambio"
-```
+Luego de agregar los archivos, si queremos enviarlos al repositorio, podemos usar los siguientes comandos:
+
+|COMANDO                     |DESCRIPCIÓN                       |
+|:---------------------------|:---------------------------------|
+|`git commit -m "<message>"` |Enviar los cambios al repositorio.|
+|`git commit -am "<message>"`|Realiza el `git add` y el `git commit` en un solo comando.|
+
 Cuando ejecutamos este comando, estamos enviando los cambios al repositorio (**.git**), que a su vez tiene un nombre por defecto y es **master**.
 
 >[!NOTE]
@@ -76,7 +83,8 @@ Para ver los cambios que se han hecho usamos el siguiente comando:
 |:----------------|:------------------------------------------------|
 |`git show`       |Ver los cambios que han existido sobre los últimos **commit**s.|
 |`git show <file>`|Ver los cambios que han existido sobre los últimos **commit**s de un archivo.|
-|`git log <file>` |Ver los ID de los **commit**s.      |
+|`git log <file>` |Ver los ID de los **commit**s.                   |
+|`git log --graph --oneline`|Es un pequeño resumen del comando `git log` resumido en una linea.|
 |`git diff <idCommitA> <idCommitB>`|Ver diferencia entre una versión y otra especificamente|
 
 #### SUBIR CAMBIOS A UN SERVIDOR REMOTO (GITHUB)
@@ -98,6 +106,7 @@ Primero necesitamos visualizar la lista de variables de entorno de Git usando el
 |:-----------------------------------------|:---------------------------|
 |`git config --global user.name "<name>"`  |Edita el nombre del usuario.|
 |`git config --global user.email "<email>"`|Edita el correo del usuario.|
+|`git config --global color.ui auto`       |Habilita la útil colorización de la línea de comando.|
 
 >[!NOTE]
 > _Nota: Si no configuramos estas variables de entorno, por defecto apareceran las del sistema operativo actual._
@@ -117,11 +126,12 @@ Los sigueintes comandos nos ayudarán con el manejo de las ramas:
 |:---------------------------------|:-------------------------------------|
 |`git branch`|Ver todas las ramas existentes en nuestro repositorio local.|
 |`git branch <branchName>`|Crear nueva rama con un nombre especifico.     |
-|`git checkout <branch>`|Cambiar de rama.|
+|`git branch -d <branch>`|Borra la rama especificada.                     |
+|`git checkout <branch>`|Cambiar de rama.                                 |
+|`git checkout -b <branch>`|Crea una rama y a la vez hace `checkout` a la misma.|
 
-#### CAMBIAR DE VERSIONES
-Existen diferentes comandos que nos permiten movernos entre versiones anteriores. Uno de ellos es `reset`. El comando `git reset` es una herramienta poderosa que te permite deshacer o revertir cambios en tu repositorio de Git.
-Hay 3 formas de usar el comando `reset`:
+#### REHACER COMMITS
+Borrar errores y elaborar historial de reemplazo.
 
 |COMANDO                           |DESCRIPCIÓN                           |
 |:---------------------------------|:-------------------------------------|
@@ -130,7 +140,8 @@ Hay 3 formas de usar el comando `reset`:
 |`git reset <idCommitA> <idCommitB> --soft`|Se borra el historial pero mantiene los archivos del área de **staging** para poder aplicar últimos cambios a un nuevo **commit**.|
 |`git reset <idCommitA> <idCommitB> HEAD`|Mueve los cambios de **staging** a **unstaged**. Seguimos teniendo los últimos cambios del archivo, el repositorio sigue teniendo el archivo sólo con los cambios en los que hicimos **commit**.|
 
-Si solo queremos volver a cualquier versión anterior sin borrar el historial del archivo, utilizamos el siguiente comando:
+#### CAMBIAR DE VERSIONES
+Volver a cualquier versión anterior sin borrar el historial del archivo. Se usa el siguiente comando:
 ```
     git checkout <idCommit>
 ```
@@ -138,6 +149,7 @@ Si solo queremos volver a cualquier versión anterior sin borrar el historial de
 El comando `git checkout` que nos deja ir, mirar, pasear y volver. Con `git reset` volvemos al pasado sin la posibilidad de volver al futuro. Borramos la historia y la debemos sobreescribir. No hay vuelta atrás.
 
 Si queremos movernos atraves de ramas, necesitamos usar los siguientes comandos:
+
 |COMANDO                     |DESCRIPCIÓN                           |
 |:---------------------------|:-------------------------------------|
 |`git checkout master <file>`|Nos movemos a la rama principal y con los datos más recientes de ese archivo.|
@@ -157,6 +169,6 @@ Para este tema necesitaremos los siguientes comandos:
 |`git fetch`|Lo usamos para traer actualizaciones del servidor remoto y guardarlas en nuestro repositorio local (en caso de que hayan, por supuesto). Pero no copia la información a mis archivos.|
 |`git fetch <branch>`|Descarga cambios del repositorio remoto (GitHub) y crea una rama (branch) que luego se debe fusionar con la rama master de nuestro entorno local.|
 |`git merge`|También usamos el comando `git merge` con servidores remotos. Lo necesitamos para combinar los últimos cambios del servidor remoto y nuestro directorio de trabajo. Con este unimos los cambios obtenidos con el `git fetch` a mis archivos.|
-|`git merge <branch>`|Fusiona una rama con la actual, que es la misma en donde estamos posicionados.|
+|`git merge <branch>`|Fusiona una rama con la actual, que es la misma en donde estamos posicionados. Este `merge` es un `commit` a la rama y necesitará un mensaje, como todos los `commit`.|
 |`git pull`|Básicamente, `git fetch` y `git merge` al mismo tiempo.|
 |`git pull <branch>`|Descarga cambios del repositorio remoto (GitHub) y fusiona automáticamente la rama especificada a la rama master de nuestro entorno local.|
