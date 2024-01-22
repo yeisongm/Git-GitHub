@@ -247,8 +247,11 @@ Luego verificamos que la URL se haya guardado en nuestro entorno local de la sig
 Debemos traer la versión del repositorio remoto y hacer **merge** para crear un `commit` con los archivos de ambas partes. Podemos usar `git fetch` y `git merge` o solo el `git pull` de la siguiente manera:
 
 ```
-    git pull origin main --allow-unrelated-histories
+    git pull origin main
 ```
+
+>[!WARNING]
+> _Si en la consola aparece alguna advertencia de no haber `commit` comunes (warning: no common `commits`), usaremos el siguiente comando: `git pull origin main --allow-unrelated-histories`._
 
 Por último, debemos hacer `git push` para guardar los cambios de nuestro repositorio local en **GitHub**. Lo haremos usando el siguiente comando:
 
