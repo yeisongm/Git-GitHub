@@ -18,9 +18,34 @@ GitHub es un servicio de alojamiento que ofrece a los desarrolladores repositori
 - Es la opción perfecta para poder trabajar en equipo en un mismo proyecto.
 - Ofrece todas las ventajas del sistema de control de versiones Git, pero también tiene otras herramientas que ayudan a tener un mejor control de nuestros proyectos.
 
+#### REPOSITORIO REMOTO
+Un repositorio remoto es un lugar en internet donde almacenamos nuestro repositorio para que no solo viva en local sino que cualquier persona del equipo (que tenga permisos) pueda verlo y contribuir a nuestro proyecto entre otras cosas mas. Estos repositorios remotos facilitan el trabajo colaborativo puesto que cada uno de los integrantes de nuestro equipo podrá entrar y ver los cambios hechos, aportar a estos cambios y demas cosas.
+
+Estos servidores remotos pueden estar alojados en **GitHub**, **GitLab**, **BitBucket**, entre otros. Lo que van a hacer es guardar el mismo repositorio que tienes en tu computadora y darnos una URL con la que todos podremos acceder a los archivos del proyecto. Así, el equipo podrá descargarlos, hacer cambios y volverlos a enviar al servidor remoto para que otras personas vean los cambios, comparen sus versiones y creen nuevas propuestas para el proyecto.
+
+#### LLAVES PÚBLICAS Y PRIVADAS
+Las llaves públicas y privadas, conocidas también como cifrado asimétrico de un solo camino, sirven para mandar mensajes privados entre varios nodos con la lógica de que firmas tu mensaje con una llave pública vinculada con una llave privada que puede leer el mensaje.
+
+Las llaves públicas y privadas nos ayudan a cifrar y descifrar nuestros archivos de forma que los podamos compartir sin correr el riesgo de que sean interceptados por personas con malas intenciones.
+
+* #### **¿Cómo funciona un mensaje cifrado con llaves públicas y privadas?**
+    1. Ambas personas deben crear su llave pública y privada.
+    2. Ambas personas pueden compartir su llave pública a las otras partes (recuerda que esta llave es pública, no hay problema si la “interceptan”).
+    3. La persona que quiere compartir un mensaje puede usar la llave pública de la otra persona para cifrar los archivos y asegurarse que solo puedan ser descifrados con la llave privada de la persona con la que queremos compartir el mensaje.
+    4. El mensaje está cifrado y puede ser enviado a la otra persona sin problemas en caso de que los archivos sean interceptados.
+    5. La persona a la que enviamos el mensaje cifrado puede emplear su llave privada para descifrar el mensaje y ver los archivos.
+
+    _Nota: puedes compartir tu llave pública, pero nunca tu llave privada._
+
 ---
 
 ### COMANDOS ⌨️
+
+#### UBICACIÓN ACTUAL DEL USUARIO EN LA PC
+El siguiente comando nos muestra la ubicación (path) del directorio actual de trabajo:
+```
+    pwd
+```
 
 #### CREAR REPOSITORIOS
 Para iniciar u obtener un nuevo repositorio, usaremos los siguientes comandos: 
@@ -100,7 +125,7 @@ Al enviar los cambios al servidor remoto debemos poner el nombre de la rama remo
 
 #### CONFIGURACIÓN DE VARIABLES DE ENTORNO
 Debemos configurar las variables de entorno para determinar la identidad del que hace los cambios. 
-Primero necesitamos visualizar la lista de variables de entorno de Git usando el comando `git config --list`. Luego de tener la lista visible, necesitamos editar el nombre y correo del usuario, para eso usaremos los siguientes comandos:
+Primero necesitamos visualizar la lista de variables de entorno de Git usando el comando `git config --list` o `git config -l`. Luego de tener la lista visible, necesitamos editar el nombre y correo del usuario, para eso usaremos los siguientes comandos:
 
 |COMANDO                                   |DESCRIPCIÓN                 |
 |:-----------------------------------------|:---------------------------|
@@ -130,6 +155,9 @@ Los sigueintes comandos nos ayudarán con el manejo de las ramas:
 |`git checkout <branch>`|Cambiar de rama.                                 |
 |`git checkout -b <branch>`|Crea una rama y a la vez hace `checkout` a la misma.|
 
+>[!IMPORTANT]
+>_Desde el 1 de octubre de 2020 GitHub cambió el nombre de la rama principal: ya no es **“master”** sino **main**. Este derivado de una profunda reflexión ocasionada por el movimiento #BlackLivesMatter. Si se está trabajando desde la rama **master** es necesario pasarse a la rama **main**. Para ello usaremos el comando `git branch -m main`. De esta manera **master** seguirá siendo **main**._
+
 #### REHACER COMMITS
 Borrar errores y elaborar historial de reemplazo.
 
@@ -155,10 +183,7 @@ Si queremos movernos atraves de ramas, necesitamos usar los siguientes comandos:
 |`git checkout master <file>`|Nos movemos a la rama principal y con los datos más recientes de ese archivo.|
 |`git checkout <branch>`     |Nos movemos hacia una rama específica.|
 
-#### REPOSITORIO REMOTO
-Un repositorio remoto es un lugar en internet donde almacenamos nuestro repositorio para que no solo viva en local sino que cualquier persona del equipo (que tenga permisos) pueda verlo y contribuir a nuestro proyecto entre otras cosas mas. Estos repositorios remotos facilitan el trabajo colaborativo puesto que cada uno de los integrantes de nuestro equipo podrá entrar y ver los cambios hechos, aportar a estos cambios y demas cosas.
-
-Estos servidores remotos pueden estar alojados en **GitHub**, **GitLab**, **BitBucket**, entre otros. Lo que van a hacer es guardar el mismo repositorio que tienes en tu computadora y darnos una URL con la que todos podremos acceder a los archivos del proyecto. Así, el equipo podrá descargarlos, hacer cambios y volverlos a enviar al servidor remoto para que otras personas vean los cambios, comparen sus versiones y creen nuevas propuestas para el proyecto.
+#### GESTIONAR UN REPOSITORIO REMOTO
 
 Para este tema necesitaremos los siguientes comandos:
 
@@ -172,3 +197,62 @@ Para este tema necesitaremos los siguientes comandos:
 |`git merge <branch>`|Fusiona una rama con la actual, que es la misma en donde estamos posicionados. Este `merge` es un `commit` a la rama y necesitará un mensaje, como todos los `commit`.|
 |`git pull`|Básicamente, `git fetch` y `git merge` al mismo tiempo.|
 |`git pull <branch>`|Descarga cambios del repositorio remoto (GitHub) y fusiona automáticamente la rama especificada a la rama master de nuestro entorno local.|
+
+#### GESTIONAR LLAVES SSH
+
+La creación de las SSH es necesario **solo una vez por cada computadora**. Aquí conocerás cómo conectar a GitHub usando SSH.
+Para configurar nuestras llaves SSH en nuestro entorno local, necesitaremos los siguientes comandos:
+
+* #### **Generar una llave SSH:**
+    Para generar una clave SSH es muy recomendable estar en el home del repositorio local, para llegar a él podemos hacerlo con el comando `cd ~`.
+
+    Luego podemos crear la clave con el siguiente comando:
+    ```
+        ssh-keygen -t rsa -b 4096 -C "youremail@example.com"
+    ```
+    Despues de ejecutar el comando anterior, la consola nos pedirá dónde guardar la llave. Lo recomendable es dejarla en la ruta por defecto, asi que le daremos **ENTER**.
+
+    Finalmente la consola nos pedirá un **passphrase**, el cual es una clave para nuestra llave. Es opcional pero lo recomendable es escribir una.
+
+* #### **Comprobar proceso y agregar la llave:**
+    Comprobar que el proceso esté activo y agregar la llave al entorno local:
+
+    |COMANDO                |DESCRIPCIÓN                                        |
+    |:----------------------|:--------------------------------------------------|
+    |`eval $(ssh-agent -s)`|Comprobar que el servidor de SSH esté activo.       |
+    |`ssh-add ~/.ssh/id_rsa`|Agregar la llave al entorno local de windows/LINUX.|
+
+* #### **Vincular las credenciales con SSH:**
+    Luego de haber creado las llaves en el home (~), podemos entregarle la llave pública a GitHub para comunicarnos de forma segura y sin necesidad de escribir nuestro usuario y contraseña todo el tiempo. 
+
+    Para hacerlo debemos seguir la siguiente ruta: [`Settings/SSH and GPG keys/New SSH key`](https://github.com/settings/keys), le agregamos el título y en el campo correspondiente pegamos la llave. Finalmente le damos click al botón **Add SSH key**.
+
+#### USO DE GITHUB
+Luego de crear nuestra cuenta en [**GitHub**](https://github.com/signup), debemos crear y/o importar nuestro repositorio en [**nuevo repositorio**](https://github.com/new).
+
+Una vez tenemos el nuevo repositorio, debemos conectar con la url de este para dar un origen del remoto al local.
+Para esto usamos el siguiente comando:
+
+```
+    git remote add origin <url>
+```
+
+Luego verificamos que la URL se haya guardado en nuestro entorno local de la siguiente manera:
+
+```
+    git remote
+    git remote -v
+```
+
+Debemos traer la versión del repositorio remoto y hacer **merge** para crear un `commit` con los archivos de ambas partes. Podemos usar `git fetch` y `git merge` o solo el `git pull` de la siguiente manera:
+
+```
+    git pull origin main --allow-unrelated-histories
+```
+
+Por último, debemos hacer `git push` para guardar los cambios de nuestro repositorio local en **GitHub**. Lo haremos usando el siguiente comando:
+
+```
+    git push origin main
+```
+
