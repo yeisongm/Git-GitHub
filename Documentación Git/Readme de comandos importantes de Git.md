@@ -1,4 +1,3 @@
-
 # Lo siguiente es una documentación del curso de Git - GitHub en Platzi
 
 ### CONCEPTOS 📒
@@ -37,7 +36,225 @@ Las llaves públicas y privadas nos ayudan a cifrar y descifrar nuestros archivo
 
     _Nota: puedes compartir tu llave pública, pero nunca tu llave privada._
 
----
+
+#### CONFIGURAR MÚLTIPLES COLABORADORES EN UN REPOSITORIO DE GITHUB
+Por defecto, cualquier persona puede clonar o descargar tu proyecto desde
+GitHub, pero no pueden crear commits, ni ramas, ni nada. Para solucionar esto
+podemos añadir a cada persona de nuestro equipo como colaborador de nuestro repositorio.
+Los pasos son los siguientes:
+1. En GitHub, visita la página principal del repositorio.
+2. Ir a la configuración del proyecto (**settings**), luego en acceso (**Access**), en colaboradores (**Collaborators**), en administrar acceso (**Manage access**) y darle al botón **Add people**.
+3. Procedemos a buscar en el campo de busqueda a la persona que deseamos invitar. Posteriormente damos clic al usuario indicado en la lista de coincidencias. Por ultimo le damos al botón agregar, que dice **Add user to this repository**. El usuario recibirá un email invitándolo al repositorio.
+
+>[!NOTE]
+>_Una ruta más corta puede ser **github.com/usuario/repositorio/settings/access**._
+
+Una vez que el colaborador acepte la invitación, tendrá acceso de colaborar en el repositorio.
+
+#### FLUJO DE TRABAJO PROFESIONAL: HACIENDO MERGE DE RAMAS DE DESARROLLO A MASTER.
+Para poder desarrollar software de manera óptima y ordenada, necesitamos tener un flujo de trabajo profesional, que nos permita trabajar en conjunto sin interrumpir el trabajo de otros desarrolladores. Una buena práctica de flujo de trabajo sería la siguiente:
+
+1. Crear ramas
+2. Asignar una rama a cada programador
+3. El programador baja el repositorio con `git pull origin main`.
+4. El programador cambia de rama
+5. El programador trabaja en esa rama y hace `commit`s
+6. El programador sube su trabajo con `git push origin <branchName>`
+7. El encargado de organizar el proyecto baja, revisa y unifica todos los cambios con un `git merge <branchName>`.
+8. El encargado debe enviar los cambios a GitHub con un `git pull origin main` (obtener los cambios) y un `git push origin main` (envia los cambios).
+
+#### FLUJO DE TRABAJO PROFESIONAL CON PULL REQUESTS
+Para realizar pruebas enviamos código a servidores que normalmente los llamamos **staging server**, luego de que se realizan las pruebas pertinentes de código como de la aplicación estos pasan a el **servidor de producción**.
+
+>[!NOTE]
+>_En un entorno profesional normalmente se bloquea la rama master, y para enviar código a dicha rama pasa por un code review y luego de su aprobación se unen códigos con los llamados `pull request`._
+
+ * #### **PULL REQUESTS**
+    Es la acción de validar un código que se va a mergear de una rama a otra. En este proceso de validación pueden entrar los factores que queramos: Builds (validaciones automáticas), asignación de código a tareas, validaciones manuales por parte del equipo, despliegues, etc.
+
+    >[!NOTE]
+    >_Nota: Los `pull request`, no es una caracteristica de Git, si no de Github._
+
+    La persona que hace todo esto, normalmente son los lideres de equipo o un perfil muy especial que se llama DevOps (permite que los roles que antes estaban aislados se coordinen y colaboren para producir productos mejores y más confiables).
+
+    Los `pull request` podrían compararse con un control de calidad interno donde el equipo tiene la oportunidad de detectar bugs o código que no sigue lineamientos, convenciones o buenas prácticas. Incluso puede presentar ahorros a la empresa. Github nos permite llevar un control e implementa un proceso para la atención y revisión de estas solicitudes.
+
+#### UTILIZANDO PULL REQUESTS EN GITHUB
+Cuando un desarrollador termina de crear (y probar) ya sea una nueva funcionalidad o corrección de bug, solicita integrar su desarrollo al repositorio principal. Esta solicitud se conoce como pull request (o PR).
+
+>[!NOTE]
+>_Nota: No olvidar traer los cambios (Git Pull) y enviar los cambios (Git Push) siempre como buena practica!_
+
+Es una buena práctica crear una nueva rama cada vez que necesitamos corregir un error puntual.
+
+Despues de crear la rama para la corrección del error, haremos lo siguiente:
+
+1. Creamos la branch, solucionamos los problemas, hacemos el commit y subimos los cambios con `git push origin <branchName>`.
+2. Cuando subimos los cambios, en github nos aparecerá un mensaje como este _"you recently pushed branches, **branchName** (less than a minute ago) compare & pull request"_ **GitHub nos ofrece comparar la rama con master y hacer un `pull request`**. También hay un botón al lado del de branch que dice `New pull request`.
+3. Si soy el/la dueño(a) del repositorio, estoy en la rama master y le doy `pull request` Podré comparar master con otras ramas. De esta manera puedo ver cuales
+fueron los cambios (github nos indica si es posible hacer el merge automáticamente.) Nos aparece la opción de agregar **reviewers**.
+4. El `pull request` no ejecuta el merge de por sí, simplemente describe que es lo que está pasando. Colocamos los colaboradores que queremos que revisen los cambios y presionamos `create pull request`.
+5. La otra persona en su cuenta al entrar al repositorio verá que tiene 1 `pull request` y se le indica quién le ha solicitado revisar los cambios y con qué objetivo (En este caso, fusionar la rama master con fix-typo).
+6. El colaborador tiene acceso a los commits y cambios realizados y puede decidir si aceptar los cambios o no. Esto se hace a través de **review changes**. Se pueden aprobar esos cambios (approve), comentar o requerir cambios request changes. En este caso el colaborador pide cambios.
+7. Desde mi repositorio local realizo los cambios solicitados, los subo al remoto y en github puedo observar que al lado del nombre de la rama me aparece **View #1** que es el `pull request` que ya había ejecutado. Desde ahí puedo enviarle un mensaje al colaborador y avisarle que ya están los cambios.
+8. El colaborador recibe los cambios, los revisa y ya puede decidir si aprobarlos con review changes.
+9. Una vez aprobados los cambios no significa que el merge se ejecute, alguien debe hacerlo y para ello es muy importante que esté bien definido quien es la persona encargada. Normalmente el encargado es el administrador o el **DevOps** hace el **merge** con la rama principal.
+10. Si se requiere, podemos eliminar la rama ya que fue creada solo para solucionar un error (**Delete Branch**).
+
+>[!NOTE]
+>_Una vez realizado el Merge, es importante traer los cambios en Git (**Git Pull**), en caso de querer borrar la rama en GitHub, podemos borrarla en Git con `git branch -D <branchName>`._
+
+#### IGNORAR ARCHIVOS EN EL REPOSITORIO CON .GITIGNORE
+Muchos poryectos tienen archivos que no pueden ser públicos, como archivos de configuración con contraseñas, lo ideal es que no se suban al repositorio. Estos archivos se pueden poner en el archivo **.gitignore**.
+
+Las reglas sobre los patrones que puedes incluir en el archivo .gitignore son las siguientes:
+
+* Ignorar las líneas en blanco y aquellas que comiencen con #.
+* Aceptar patrones glob estándar.
+* Los patrones pueden terminar en barra (/) para especificar un directorio.
+* Los patrones pueden negarse si se añade al principio el signo de exclamación (!).
+
+>[!TIP]
+>_Tip:Una buena practica es evitar que los archivos binarios del contenido, sean parte del repositorio._
+
+Cuando se crea archivo .gitignore, se debe confirmar con `git add` .gitignore y luego el commit respectivo para que se agregue al repositorio.
+
+#### Ejemplo de un archivo .gitignore por https://gitignoraio/
+|REGLA |DESCRIPCIÓN                 |
+|:-----|:---------------------------|
+|*.a   |# ignora los archivos en . a|
+|!lib.a|# pero no lib.a, aun cuando había ignorado los archivos terminados en .a en la línea anterior|
+|/TODO|# ignora unicamente el archivo 1000 de la raiz, no subdir/|
+|build/|# ignora todos los archivos del directorio build/|
+|doc/*.txt|# ignora doc/notes.txt, pero no este: doc/server/arch.txt|
+|doc/**/*.txt|# ignora todos los archivos .txt del directorio doc/|
+
+>[!TIP]
+>_Es importante que archivo se nombre ".gitignore", con punto al inicio._
+
+.Gitignore sirve para decirle a Git qué archivos o directorios completos debe ignorar y no subir al repositorio de código. Únicamente se necesita crear un archivo especificando qué elementos se deben ignorar y, a partir de entonces, realizar el resto del proceso para trabajo con Git de manera habitual.
+
+#### TU SITIO WEB PÚBLICO CON GITHUB PAGES
+Puedes usar Páginas de GitHub para albergar un sitio web sobre ti mismo, organización o proyecto directamente desde un repositorio GitHub. 
+Abrirla página oficial de Github para más ayuda: https://pages.github.com/
+
+Para agregar una url de Github Pages a un repositorio existente:
+* Ir a **"settings"** del repositorio en la pestaña **"Options"**, en la sección ["**GitHub Pages**"](https://pages.github.com/).
+* Elegir en **"Source"**, la rama principal donde se encuentra el código actualizado. Esto genera en automático la Url de la web alojada en Github.
+
+**Github Pages** es vn beneficio adicional que te permite publicar sitio web de forma gratuita y desde la CDN global de Github, basado en una rama que puede ser diferente a la master. La ventaja de esto es que la web se puede actualizar con cambios en el repositorio y Ejecutando un git commit/git push, además de contar con certificado HTTPS para proporcionar mayor transparencia y seguridad para los usuarios.
+
+#### GIT STASH: GUARDAR CAMBIOS EN MEMORIA Y RECUPERARLOS DESPUÉS
+El comando `git stash` almacena temporalmente (o guarda en un stash) los cambios que hayas efectuado en el código con el que estás trabajando para que puedas trabajar en otra cosa y, más tarde, regresar y volver a aplicar los cambios.
+
+Git stash es uno de los comandos más útiles de Git. Es una forma rápida de tener en temporal tus cambios, poder moverte entre ramas y luego recuperar esos cambios. **Git stash** se recomienda cuando haces pequeños cambios que no merecen ramas o cuando llevas trabajo adelantado y necesitas datos de otra rama pero no estas listo para hacer commit.
+
+#### GIT CHERRY-PICK: TRAER COMMITS ANTIGUOS AL HEAD DEL BRANCH
+`Git cherry-pick` es un comando en Git que selecciona y aplica commits específicos de una rama o branch a otra. Todo, sin tener que hacer un merge completo. Así, podemos copiar un commit específico y aplicarlo de forma aislada en la rama de destino, conservando su historial.
+
+* #### Escenarios de uso de Git Cherry Pick
+    Este comando facilita la incorporación precisa de cambios, optimizando la colaboración y el mantenimiento en proyectos de desarrollo de software. Veamos sus casos de uso.
+
+    1. #### Colaboración en equipo
+        Antes que nada, puede ser útil implementarlo cuando diferentes miembros del equipo trabajan en áreas similares del código, pues permite seleccionar y aplicar commits específicos a cada rama, facilitando el progreso individual.
+
+    2. #### Solución de bugs o errores
+        Cuando encuentras un error o bug, es importante solucionarlo y entregar la corrección a los usuarios lo más rápido posible. Con Git Cherry Pick, puedes aplicar rápidamente un commit de verificación en la rama principal, evitando que afecte a más usuarios.
+
+    3. #### Deshacer cambios y recuperar commits perdidos
+        A veces, una rama de funcionalidad puede ser obstoleta y no ser fusionada con la rama principal. O puede suceder que una solicitud de extracción (pull request) sea cerrada sin ser fusionada.
+
+Git nunca pierde esos commits y, a través de comandos como `git log` y `git reflog`, puedes encontrar y aplicar los commits utilizando Git Cherry Pick.
+
+* #### ¿Cómo funciona Git Cherry Pick? Ejemplos
+    Imaginemos que tienes un repositorio con el siguiente estado de las ramas:
+
+    ```
+    a - b - c - d   Rama Principal
+         \\
+           e - f - g Rama de Características
+    ```
+
+    El uso de Git Cherry Pick es bastante sencillo y se ejecuta de la siguiente manera:
+
+    1. Primero, asegúrate de estar en la rama principal empleando el comando git checkout rama-principal.
+    2. Luego, ejecuta el siguiente comando:
+
+    ```
+        git cherry-pick <hashCommit>
+    ```
+
+    Aquí, commitSha es una referencia al commit que deseas aplicar. Puedes encontrar la referencia del commit utilizando el comando git log. Supongamos que deseas usar el commit ‘f’ en la rama principal.
+
+    Una vez ejecutado el comando, el historial de Git se verá así:
+
+    ```
+    a - b - c - d - f   Rama Principal
+         \\
+           e - f - g Rama de Características
+    ```
+
+    De esta forma, el commit ‘f’ se ha incorporado correctamente a la rama principal.
+
+El uso de Git Cherry Pick debería aplicarse con sabiduría, ya que **puede generar duplicación de commits** y **complicaciones en el historial de cambios**. Sin embargo, si sabes lo que estás haciendo, ¡adelante! Solo asegúrate de evitar su utilización si no estás seguro.
+
+* #### ¿Cómo deshacer este comando en caso de conflicto?
+    Supongamos que estás usando GitHub para colaborar con un equipo en un proyecto y has realizado un cherry-pick de un commit de otra rama en tu rama local, pero ocurren conflictos durante este proceso y deseas detenerlo y volver al estado anterior.
+
+    Por suerte, en ese caso, puedes emplear el siguiente comando.
+
+    ```
+        git cherry-pick --abort
+    ```
+
+    Esto significa que puedes hacer las correcciones necesarias en tu rama local y volver a intentar el cherry-pick si así lo deseas.
+
+#### GIT RESET Y REFLOG: ÚSESE EN CASO DE EMERGENCIA
+Git guarda todos los cambios aunque decidas borrarlos, al borrar un cambio lo que estás haciendo sólo es actualizar la punta del branch, para gestionar éstas puntas existe un mecanismo llamado registros de referencia o reflogs…La gestión de estos cambios es mediante los hash’es de referencia (o ref) que son apuntadores a los commits…Los recoges registran cuándo se actualizaron las referencias de Git en el repositorio local (sólo en el local), por lo que si deseas ver cómo has modificado la historia puedes utilizar el comando:
+
+```
+    git reflog
+```
+
+#### RECONSTRUIR COMMITS EN GIT CON AMEND
+`Git amend` es una forma que tienes para hacer cambios a tu commit más recientes sin tener que hacer un nuevo commit.
+
+* #### Recomendaciones en el uso de git amend
+    El comando de `git amend` se usa para modificar el último commit. Es decir, te permite “revisar” o “corregir” el último cambio confirmado que hayas hecho en tu proyecto.
+
+    Por ejemplo, imagínate que acabas de hacer un commit, pero te diste cuenta de que no querías enviarlo porque faltaba algo más. En lugar de hacer un nuevo commit, puedes usar `git commit --amend` para agregar esos cambios al commit más reciente. Esto es útil porque mantiene tu historial de commits limpio y organizado.
+
+    Usar **amend** es considerado una mala práctica, especialmente después de haber hecho push o pull al repositorio remoto. Al hacer **amend** con algún commit que ya esté en remoto, se generará un conflicto que deberá resolverse con un commit adicional. En este proceso, se perderá el beneficio del **amend**.
+
+    No utilizar **--amend** para reconstruir commits que ya se encuentran en el repositorio remoto. Esto sería una mala práctica.
+
+* #### ¿Cómo hacer un git amend?
+    Utilizar **amend** para remendar un commit puede modificar el commit más reciente (enmendar) en la misma rama. Se ejecuta de la siguiente manera:
+
+    ```
+        git commit --amend
+    ```
+
+* #### ¿Para qué sirve git commit amend?
+    Este comando sirve para agregar archivos nuevos o actualizar el commit anterior y no generar commits innecesarios. También es una forma sencilla de editar o agregar comentarios al commit anterior porque abrirá la consola para editar este commit anterior.
+
+Procura no corregir una confirmación en la que otros desarrolladores hayan basado su trabajo, ya que crea una Situación confusa para ellos de la que resulta complicado recuperarse.
+
+>[!CAUTION]
+>_No se recomienda 'modificar' un commit ya enviado a un repositorio, pero en caso de que se tenga que volver a enviar, podemos hacerlo adicionando la opción `--force` a `git push`. Posiblemente luego debemos solucionar algún conflicto de forma manual. Tener precaución en su uso. `git pugh origin master --forc`_
+
+#### BUSCAR EN ARCHIVOS Y COMMITS DE GIT CON GREP Y LOG
+A medida que nuestro proyecto se va haciendo más grande y este conformado de múltiples archivos, Git nos ofrece herramientas de búsqueda tanto en los directorios de trabajo como en log de confirmaciones. Las opciones se pueden ejecutar combinadas, que lo vuelve una opción muy útil y poderosa para la administxación de nuestro proyecto.
+
+* #### GIT GREP
+    Git tiene un comando llamado grep que le permite buscar fácilmente a través de cualquier árbol o directorio de trabajo con commit, por una cadena de texto. Por defecto, comando buscará a través de los archivos en directorio de trabajo.
+
+* #### BUSQUEDA DE REGISTROS CON GIT LOG
+    El comando git log tiene varias herramientas potentes para encontrar commits específicos por contenido de sus mensajes o incluso contenido de las diferencias que introducen.
+
+En Git también se pueden realizar búsquedas con expresiones regulares. Las expresiones regulares son patrones que se utilizan para hacer coincidir combinaciones de caracteres en cadenas.
+
+-------------------------------------------------------------------------------
 
 ### COMANDOS ⌨️
 
@@ -110,7 +327,11 @@ Para ver los cambios que se han hecho usamos el siguiente comando:
 |`git show <file>`|Ver los cambios que han existido sobre los últimos **commit**s de un archivo.|
 |`git log <file>` |Ver los ID de los **commit**s.                   |
 |`git log --graph --oneline`|Es un pequeño resumen del comando `git log` resumido en una linea.|
+|`git log --all --graph --decorate --oneline`|Un resumen del `git log` en forma de grafo decorado y en una sola línea.|
 |`git diff <idCommitA> <idCommitB>`|Ver diferencia entre una versión y otra especificamente|
+
+>[!TIP]
+>_Existe un comando con el que podemos ver toda la historia de nuestro proyecto en un software y de forma más visual. Este comando es `gitk`._
 
 #### SUBIR CAMBIOS A UN SERVIDOR REMOTO (GITHUB)
 Luego de haber implementado los comandos `add` para agregar y `commit -m` para confirmar, debemos usar otro para subir los cambios a un servidor remoto. El comando es el siguiente:
@@ -139,24 +360,63 @@ Primero necesitamos visualizar la lista de variables de entorno de Git usando el
 #### CONTENIDO DEL ARCHIVO
 Para visualizar el contenido de mi archivo, usamos el comando `cat <file>`.
 
+#### GUARDAR COMANDO CON UN ALIAS
+Cuando tenemos un comando demasiado largo, dificil de aprender, usamos los alias de linux. Estos alias funcionan como variables en donde almacenamos el comando para usarlo posteriormente.
+La manera de usarlos es la siguiente:
+
+```
+    alias miVariable = "git log --all --graph --decorate --oneline"
+```
+
 #### RAMAS (BRANCH)
 Cuando se crea un repositorio en la carpeta de trabajo se crea por defecto una rama (**Branch**) principal llamada **master**.
 Esta rama principal se puede ver como el mapa lineal de los **commit**s que se han realizados al archivo.
 
 Es muy común entre desarrolladores crear una rama llamada **develop** con la finalidad de hacer pruebas y no tocar la rama principal llamada **master**.
 
-Los sigueintes comandos nos ayudarán con el manejo de las ramas:
+Los siguientes comandos nos ayudarán con el manejo de las ramas:
 
 |COMANDO                           |DESCRIPCIÓN                           |
 |:---------------------------------|:-------------------------------------|
 |`git branch`|Ver todas las ramas existentes en nuestro repositorio local.|
 |`git branch <branchName>`|Crear nueva rama con un nombre especifico.     |
+|`git show-branch`|Ver las ramas existentes de nuestro repositorio local, pero con más detalles.|
+|`git show-branch --all`|Ver las ramas existentes, con su ubicación (local o remoto) y su historia más reciente junto a sus commits.|
 |`git branch -d <branch>`|Borra la rama especificada.                     |
+|`git branch -v`|Listar las ramas locales.|
+|`git branch -r`|Listar las ramas remotas.|
+|`git branch -a`|Listar todas las ramas locales y remotas.|
 |`git checkout <branch>`|Cambiar de rama.                                 |
 |`git checkout -b <branch>`|Crea una rama y a la vez hace `checkout` a la misma.|
 
 >[!IMPORTANT]
 >_Desde el 1 de octubre de 2020 GitHub cambió el nombre de la rama principal: ya no es **“master”** sino **main**. Este derivado de una profunda reflexión ocasionada por el movimiento #BlackLivesMatter. Si se está trabajando desde la rama **master** es necesario pasarse a la rama **main**. Para ello usaremos el comando `git branch -m main`. De esta manera **master** seguirá siendo **main**._
+
+Se puede trabajar con ramas en local que nunca se envian a GitHub, y viceversa.
+
+* #### **Subir o enviar una rama al repositorio local (GitHub)**
+    Las ramas que creamos en nuestro repositorio local no se subirán o crearán en el repositorio remoto, debemos subirlas nosotros mismos.
+
+    >[!IMPORTANT]
+    >_No olvidar siempre primero ejecutar el comando `git pull origin main` antes de subir las ramas._
+
+    Para subir nuestra rama usaremos el siguiente comando:
+
+    ```
+        `git push origin <nameBranch>`
+    ```
+
+    Si queremos subir varias ramas a la vez, usamos el mismo comando anterior pero separando los nombres de las ramas por espacios:
+
+    ```
+        `git push origin <branchName1> <branchName2> <branchName3>`
+    ```
+
+    >[!NOTE]
+    >_Si ya no queremos más una rama remota, la podemos eliminar con el siguiente comando: `git push origin --delete <branchName>`_
+
+    Las ramas en GitHub son importantes porque representan un área de trabajo independiente de desarrollo dentro de nuestro proyecto. Al igual que en nuestro repositorio local, en GitHub podemos trabajar con ramas y nos permiten de la misma manera, traernos los cambios realizados en otras ramas y compararlos para unirlos con nuestros cambios, utilizando Git.
+
 
 #### REHACER COMMITS
 Borrar errores y elaborar historial de reemplazo.
@@ -259,3 +519,151 @@ Por último, debemos hacer `git push` para guardar los cambios de nuestro reposi
     git push origin main
 ```
 
+#### TAGS Y VERSIONES EN GIT Y GITHUB
+Como muchos VCS (Versión Control Systems), Git tiene la posibilidad de etiquetar puntos específicos del historial como importantes. Esta funcionalidad se usa típicamente para marcar versiones de lanzamiento (v1.0, por ejemplo).
+Para esto usaremos el siguiente comando:
+
+```
+    git tag -a <tagName> -m "message" <hashCommit>
+```
+
+Si se omite el HASH del `commit`, el tag se referencia al commit actual.
+
+A continuación se listarán los comandos útiles para los tags:
+
+|COMANDO                 |DESCRIPCIÓN                                     |
+|:-----------------------|:-----------------------------------------------|
+|`git tag`               |Listar los tags creados.                        |
+|`git tag -l`            |Listar los tags creados.                        |
+|`git show-ref --tags`   |Listar los tags creados y sus commits asociados.|
+|`git push origin --tags`|Enviar los tags creados al repositorio remoto (Recordar hacer el git pull previamente).|
+|`git tag -d <tagName>`  |Eliminar un tag del entorno local. Posteriormente se realiza el pull y luego el push para enviar los cambios.|
+|`git push origin :ref/tags/<tagName>`|Eliminar tag del entorno remoto. Los tags de GitHub son releases y no se eliminan de igual manera como en el entorno local.|
+
+Los `tags` no son cambios, sirven cuando necesitamos marcar un punto especifíco en la historia de nuestro trabajo (para los releases). De esta forma, podemos hacer un seguimiento al progreso de nuestro proyecto e identificar los cambios más fácilmente entre cada versión, incluso podemos hacer un checkout a uno de esos tags.
+
+#### GIT STASH
+
+|COMANDO         |DESCRIPCIÓN                                                    |
+|:---------------|:--------------------------------------------------------------|
+|`git stash`     |Toma los cambios sin confirmar (tanto los que están preparados como los que no los están), los guarda aparte para usarlos más adelante y, acto seguido, los deshace en el código en el que se está trabajando.|
+|`git stash pop` |Puedes volver a aplicar los cambios de un stash mediante este comando. Al hacer pop del stash, se eliminan los cambios de este y se vuelven a aplicar en el código en que estás trabajando. De forma predeterminada este comando volverá a aplicar el último stash creado.|
+|`git stash list`|Se puede listar los stash realizados con este comando.|
+|`git stash drop`|Si decides que ya no necesitas algún stash en particular, puedes eliminarlo mediante este comando.|
+|`git stash clear`|Comando para eliminar todos los stashes.|
+|`git stash save "<message>"`|Comentar los stashes con una descripción|
+|`git stash apply`|Aplicar los cambios en el código que se está trabajando y conservarlos en el stash.|
+|`git stash show`|Visualizar un resumen de un stash.|
+|`git stash show -p`|Ver todas las diferencias de un stash|
+|`git stash pop stash@{n}`|Elegir que número "n" de stash se desea volver a aplicar|
+|`git stash drop stash@{n}`|Eliminar un determinado número "n" de stash.|
+
+>[!NOTE]
+>_Nota: Por defecto git stash **NO** almacena los archivos no preparados (untracked o que no se hayan ejecutado con **git add**) y los archivos ignorados._
+
+Si se necesita guardar en el stash estos archivos, ejecutar los siguientes comandos:
+
+|COMANDO                        |DESCRIPCIÓN                               |
+|:------------------------------|:-----------------------------------------|
+|`git stash -u`                 |El stash considera los Untracked files    |
+|`git stash -a`                 |El stash considera los archivos ignorados.|
+|`git stash save -u "<message>"`|Considera los Untraeked y se agrega un comentario|
+
+#### GIT CLEAN: LIMPIAR EL PROYECTO DE ARCHIVOS NO DESEADOS
+Git Clean es un método adecuado para eliminar los archivos sin seguimiento en un directorio de trabajo del repositorio.
+
+|COMANDO                        |DESCRIPCIÓN                               |
+|:------------------------------|:-----------------------------------------|
+|`git clean`|Si ejecutamos git clean por defecto, la consola mostrará un error **'fatal: clean.requireForce defaults to true and neither -i, -n, nor -f given; ref using to clean'**. Esto es porque por defecto y por seguridad **Git Clean** esta configurado para ser ejecutado con el parametro **-f** (force).|
+|`git clean --dry-run`|Si ejecutamos `git clean --dry-run` o git clean -n , Git realizará un simulacro de borrado y se podrá ver los archivos que se van a eliminar sin que se eliminen realmente.|
+|`git clean -f`|Si ejecutamos `git crean -f`, Git inicia la eliminación real de los archivos sin seguimiento del directorio actual.|
+|`git clean -d`|Ya que se ignora los directorios de forma predeterminada, podemos agregar la opción **-d** a `git clean`, para indicar a Git que también se quiere eliminar los directorios sin seguimiento.|
+|`git clean -x`|Indica a Git que incluya también los archivos ignorados. Al igual que ocurría con las anteriores invocaciones de git clean, se recomienda realizar un simulacro antes de la eliminación final. La opción -x actuará en los archivos ignorados.|
+|`git clean -dn`|Verificar qué elementos se eliminan incluyendo ditectorios.|
+|`git clean -df`|Eliminar archivos incluyendo directorios.|
+|`git clean-xdf`|Eliminar archivos incluyendo los archivos ignorados y directorios.|
+|`git clean -q`|Muestra en pantalla solo los mensajes de errores, no imprime los nombres de los archivos eliminados.|
+|`git clean -xf`|Eliminar solo los archivos ignorados incluidos en **.gitignore**|
+|`git clean -i`|Ejecuta el proceso por medio de opciones, se puede combinar con otros comandos.|
+
+Con `git clean`, podemos eliminar archivos y/o carpetas, para tener una versión limpia de nuestro proyecto, debido a que en ocasiones tunemos elementos que han sido generados por herramientas de combinación o externas, teniendo siempre cuidado de eliminar algo por error.
+
+#### GIT RESET Y REFLOG
+Una de las cosas que Git hace en segundo plano, mientras se está trabajando a
+distancia, es mantener un "`reflog`" - un log dónde se apuntan las referencias del HEAD y la rama en los últimos meses.
+
+El reflog no forma parte del repositorio en sí (se almacena por separado) y no se incluye en los push, búsquedas o clones; es puramente local.
+
+
+
+|COMANDOS               |DESCRIPCIÓN                                  |
+|:-----------------------------|:--------------------------------------------|
+|`git reflog show --all`       |Obtener un `reflog` de todas las referencias.|
+|`git reflog show <branchName>`|Ver el registro de referencias de una rama concreta.|
+|`git reflog stash`|Ver el registro de referencia de un stash.|
+
+#### GIT AMEND
+Este comando permite "enmendar" una confirmación, pero en realidad hace una nueva, por lo que la antigua seguirá disponible y se puede volver a ella con `git checkout`.
+
+Comandos importantes:
+
+|COMANDO                       |DESCRIPCIÓN                      |
+|:-----------------------------|:--------------------------------|
+|`git commit --amend`          |Modificar el commit más reciente.|
+|`git commit --amend -m`       |Modificar el commit más reciente y su mensaje en la misma línea.|
+|`git commit --amend --no-edit`|Modificar el commit sin modificar el mensaje de dicho commit.|
+
+#### GIT GREP Y GIT LOG
+Con estos dos comandos se puede buscar texto de los archivos y los commits.
+
+* #### GIT GREP
+    |COMANDO                  |DESCRIPCIÓN                                     |
+    |:------------------------|:-----------------------------------------------|
+    |`git grep "<keyWord>"`   |Buscar a través de cualquier árbol o directorio de trabajo con commit por una cadena de texto.|
+    |`git grep -n "<keyWord>"`|Muestra los números de línea donde Git ha encontrado coincidencias.|
+    |`git grep -c "<keyWord>"` o `git grep --count "<keyWord>"`|Muestra los archivos coincidentes con la palabra clave y cuántas coincidencias hay en cada uno.|
+    |`git grep --untracked "<keyWord>"`|Buscar la palabra clave en los archivos incluyendo los untracked (sin seguimiento).|
+    |`git grep -i "<keyWord>"`|Buscar la palabra clave en los archivos ignorando las diferencias entre mayúsculas y minúsculas.|
+    |`git grep -w "<keyWord>"`|Buscar la palabra clave en los archivos considerando la palabra exacta y obviando coincidencias.|
+    |`git grep -v "<keyWord>"`|Muestra solo las líneas que no coinciden o no contengan la palabra clave.|
+    |`git grep -l "<keyWord>"`|Lista los archivos que contienen La palabra clave.|
+    |`git grep -o "<keyWord>"`|Lista todas las coincidencias sin mostrar el detalle del archivo.|
+
+* #### GIT LOG
+    |COMANDO                  |DESCRIPCIÓN                                     |
+    |:------------------------|:-----------------------------------------------|
+    |`git log -S "<keyWord>"` |Muestra los commit que contiene la palabra clave tanto en los mensajeas de los commits como en el contenido de los cambios, Podemos hacer git show a los HASH del resultado para corroborar la búsqueda.|
+    |`git log --grep "<keyWord>"`|Muestra los commit que contiene la expresión palabra clave solo en los mensajes de cada confirmación de los commits.|
+    |`git log --oneline --grep "<keyWord>"`|Adicionar `--grep` al `git log`, permite buscar la palabra clave en los mensajes de cada commit y muestra las confirmaciones que la contengan.|
+
+#### COMANDOS Y RECURSOS COLABORATIVOS EN GIT Y GITHUB
+A continuación veremos una lista de comandos colaborativos para facilitar el trabajo remoto en GitHub:
+
+* #### GIT SHORTLOG
+
+    |COMANDO          |DESCRIPCIÓN|
+    |:----------------|:----------|
+    |`git shortlog`   |Agrupa cada confirmación por autor y muestra la primera línea de cada mensaje de confirmación. Es una forma fácil de ver quién ha estado trabajando en qué.|
+    |`git shortlog -n`|Ordena la salida según el número de confirmaciones por autor en lugar de hacerlo por orden alfabético.|
+    |`git shortlog -s`|Proporciona Sólo un resumen del recuento de la confirmación.|
+    |`git shortlog -e`|Muestra la dirección de correo electrónico de cada autor.|
+    |`git shortlog --all --merges`|Muestra solo las confirmaciones de fusión o merge.|
+    |`git shortlog --all --no-merges`|Muestra todas las confirmaciones y excluye las que son por merge o fusión.|
+
+* #### GIT ALIAS
+    Si no quieres teclear el nombre completo de cada comando de Git, puedes establecer fácilmente un alias para cada comando mediante **git config**.
+
+    ```
+        git config --global alias.<nameAlias> '<command>'
+    ```
+
+* #### GIT BLAME
+    El funcionamiento de `git blame` es la visualización de metadatos de autor adjuntos a líneas específicas confirmadas en un archivo. Esto se usa para examinar puntos específicos del historial de un archivo y poner en contexto quién fue el Último autor que modificó la línea.
+
+    |COMANDO               |DESCRIPCIÓN|
+    |:---------------------|:----------|
+    |`git blame "<fileName>"`|Muestra los datos del archivo y quien hizo modificaciones.|
+    |`git blame "<fileName>" L<startingLine>,<endingLine>`|Muestra los datos del archivo y quien hizo modificaciones de las lineas especificas del comando.|
+    |`git blame -e "<fileName>"`|Muestra la dirección del email de los autores en lugar de su nombre de usuario.|
+    |`git blame -c "<fileName>"`|Funciona como el comando `git blame` pero identa cada línea del archivo para mostrarlo más ordenado.|
+    |`git blame -M "<fileName>"`|Detecta las líneas que se han movido o copiado dentro del mismo archivo. Esto indicará el autor original de las líneas en lugar de indicar el último autor que las ha movido o copiado.|
